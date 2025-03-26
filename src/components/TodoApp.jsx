@@ -6,7 +6,7 @@ import { GoPlusCircle } from "react-icons/go";
 import TodoAddEdit from "./TodoAddEdit";
 import TodoItem from "./TodoItem";
 import moment from "moment";
-import { addTodo, editTodo, deleteTodo, toggleTodo, updateAlarmStatus } from "../redux/actions/todoActions";
+import { addTodo, editTodo, deleteTodo, toggleTaskCompletion, updateAlarmStatus } from "../redux/actions/todoActions";
 
 const TodoApp = () => {
   const todos = useSelector(state => state.todos);
@@ -39,7 +39,7 @@ const TodoApp = () => {
   };
 
   const handleCheckboxChange = (id) => {
-    dispatch(toggleTodo(id));
+    dispatch(toggleTaskCompletion(id));
   };
   useEffect(() => {
     const interval = setInterval(() => {

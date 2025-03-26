@@ -1,7 +1,6 @@
 import { ADD_TODO, EDIT_TODO, DELETE_TODO, TOGGLE_TODO, UPDATE_ALARM_STATUS } from '../types';
 import { fetchTodoStatusColor } from '../../utils/utils';
-const initialState = JSON.parse(localStorage.getItem('todos')) || { todos: [] };
-
+const initialState = JSON.parse(localStorage.getItem('todos')) || [];
 const todoReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_TODO:

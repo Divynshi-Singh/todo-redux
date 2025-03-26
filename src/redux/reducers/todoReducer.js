@@ -1,6 +1,9 @@
 import { ADD_TODO, EDIT_TODO, DELETE_TODO, TOGGLE_TODO, UPDATE_ALARM_STATUS } from '../types';
 import { fetchTodoStatusColor } from '../../utils/utils';
-const initialState = JSON.parse(localStorage.getItem('todos')) || [];
+
+const initialState = {
+  todos: Array.isArray(JSON.parse(localStorage.getItem('todos'))) ? JSON.parse(localStorage.getItem('todos')) : [],
+};
 const todoReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_TODO:
@@ -13,12 +16,12 @@ const todoReducer = (state = initialState, action) => {
           ? fetchTodoStatusColor(action.payload.dueDate, false)
           : 'rgb(182, 120, 255)',
       };
-      const updatedAddTodos = [...state, newTodo];
+      const updatedAddTodos = [...state.todos, newTodo];
       localStorage.setItem('todos', JSON.stringify(updatedAddTodos));
-      return updatedAddTodos;
+      return { ...state, todos: updatedAddTodos };
 
     case EDIT_TODO:
-      const updatedEditTodos = state.map((todo) =>
+      const updatedEditTodos = state.todos.map((todo) =>
         todo.id === action.payload.id
           ? {
             ...todo,
@@ -31,23 +34,23 @@ const todoReducer = (state = initialState, action) => {
           : todo
       );
       localStorage.setItem('todos', JSON.stringify(updatedEditTodos));
-      return updatedEditTodos;
+      return { ...state, todos: updatedEditTodos };
 
     case DELETE_TODO:
-      const updatedDeleteTodos = state.filter((todo) => todo.id !== action.payload.id);
+      const updatedDeleteTodos = state.todos.filter((todo) => todo.id !== action.payload.id);
       localStorage.setItem('todos', JSON.stringify(updatedDeleteTodos));
-      return updatedDeleteTodos;
+      return { ...state, todos: updatedDeleteTodos };
 
     case UPDATE_ALARM_STATUS:
-      const updatedTodos = state.map((todo) => ({
+      const updatedTodos = state.todos.map((todo) => ({
         ...todo,
         alarmStatusColor: fetchTodoStatusColor(todo.dueDate, todo.completed),
       }));
-      localStorage.setItem("todos", JSON.stringify(updatedTodos));
-      return updatedTodos;
+      localStorage.setItem('todos', JSON.stringify(updatedTodos));
+      return { ...state, todos: updatedTodos };
 
     case TOGGLE_TODO:
-      const updatedToggleTodos = state.map((todo) =>
+      const updatedToggleTodos = state.todos.map((todo) =>
         todo.id === action.payload.id
           ? {
             ...todo,
@@ -57,8 +60,7 @@ const todoReducer = (state = initialState, action) => {
           : todo
       );
       localStorage.setItem('todos', JSON.stringify(updatedToggleTodos));
-      return updatedToggleTodos;
-
+      return { ...state, todos: updatedToggleTodos };
     default:
       return state;
   }

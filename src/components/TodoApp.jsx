@@ -9,7 +9,9 @@ import moment from "moment";
 import { addTodo, editTodo, deleteTodo, toggleTaskCompletion, updateAlarmStatus } from "../redux/actions/todoActions";
 
 const TodoApp = () => {
-  const todos = useSelector(state => state.todos);
+  const todos = useSelector(state => {
+    return Array.isArray(state.todos.todos) ? state.todos.todos : [];
+  });
   const dispatch = useDispatch();
 
   const [isAddEditModalOpen, setIsAddEditModalOpen] = useState(false);
@@ -41,6 +43,7 @@ const TodoApp = () => {
   const handleCheckboxChange = (id) => {
     dispatch(toggleTaskCompletion(id));
   };
+
   useEffect(() => {
     const interval = setInterval(() => {
       console.log("Dispatching updateAlarmStatus action...");
@@ -97,7 +100,6 @@ const TodoApp = () => {
           onClose={() => setIsAddEditModalOpen(false)}
           onAddTodo={handleAddTodo}
           onEdit={handleEditTodo}
-
         />
       )}
     </div>

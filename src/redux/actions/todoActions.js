@@ -1,4 +1,4 @@
-import { ADD_TODO, EDIT_TODO, DELETE_TODO, TOGGLE_TODO, UPDATE_ALARM_STATUS } from '../types';
+import { ADD_TODO, EDIT_TODO, DELETE_TODO, TOGGLE_TASK_COMPLETION, UPDATE_ALARM_STATUS } from '../types';
 // Add Todo
 export const addTodo = (text, dueDate) => {
   return {
@@ -23,7 +23,7 @@ export const deleteTodo = (id) => {
 // Toggle Todo completion
 export const toggleTaskCompletion = (id) => {
   return {
-    type: TOGGLE_TODO,
+    type: TOGGLE_TASK_COMPLETION,
     payload: { id },
   };
 };

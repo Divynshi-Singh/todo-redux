@@ -1,4 +1,4 @@
-import { ADD_TODO, EDIT_TODO, DELETE_TODO, TOGGLE_TODO, UPDATE_ALARM_STATUS } from '../types';
+import { ADD_TODO, EDIT_TODO, DELETE_TODO, TOGGLE_TASK_COMPLETION, UPDATE_ALARM_STATUS } from '../types';
 import { fetchTodoStatusColor } from '../../utils/utils';
 
 const initialState = {
@@ -49,7 +49,7 @@ const todoReducer = (state = initialState, action) => {
       localStorage.setItem('todos', JSON.stringify(updatedTodos));
       return { ...state, todos: updatedTodos };
 
-    case TOGGLE_TODO:
+    case TOGGLE_TASK_COMPLETION:
       const updatedToggleTodos = state.todos.map((todo) =>
         todo.id === action.payload.id
           ? {

@@ -31,15 +31,21 @@ const TodoAddEdit = ({ todo, isOpen, onClose }) => {
   }, [todo]);
 
   const minDate = moment().format("YYYY-MM-DDTHH:mm");
-
+  
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setNewTodo((prevNewTodo) => ({
       ...prevNewTodo,
       [name]: value,
     }));
+    if (name === "text" && value.trim()) {
+      setError((prevError) => ({
+        ...prevError,
+        todo: "",
+      }));
+    }
   };
-
+  
   const handleDateChange = (e) => {
     const selectedDate = e.target.value;
     setNewTodo((prevNewTodo) => ({
@@ -48,7 +54,7 @@ const TodoAddEdit = ({ todo, isOpen, onClose }) => {
     }));
     setError({ ...error, alarm: "" });
   };
-
+  
   const handleSubmit = () => {
     let valid = true;
     let newError = { todo: "", alarm: "" };

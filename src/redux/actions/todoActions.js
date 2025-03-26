@@ -1,5 +1,5 @@
 import { ADD_TODO, EDIT_TODO, DELETE_TODO, TOGGLE_TODO, UPDATE_ALARM_STATUS } from "../types";
-import { fetchTodoStatusColor } from "../utils";
+import { fetchTodoStatusColor } from "../../utils/utils";
 export const addTodo = (text, dueDate) => {
   return {
     type: ADD_TODO,

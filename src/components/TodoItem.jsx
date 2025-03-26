@@ -9,11 +9,11 @@ const TodoItem = ({ todo, onEdit, toggleTaskCompletion, onDelete }) => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
 
-  const OpenDeleteOpen = () => {
+  const openDeleteOpen = () => {
     setIsDeleteModalOpen(true);
   };
 
-  const CloseDeleteModal = () => {
+  const closeDeleteModal = () => {
     setIsDeleteModalOpen(false);
   };
 
@@ -84,7 +84,7 @@ const TodoItem = ({ todo, onEdit, toggleTaskCompletion, onDelete }) => {
         <button onClick={() => onEdit(todo)} className="cursor-pointer bg-transparent border-none">
           <MdEdit size={16} className="text-gray-600 hover:text-[blue] " />
         </button>
-        <button onClick={OpenDeleteOpen} className="cursor-pointer bg-transparent border-none">
+        <button onClick={openDeleteOpen} className="cursor-pointer bg-transparent border-none">
           <FaTrashAlt size={14} className="text-gray-600 hover:text-[red] " />
         </button>
       </div>
@@ -93,7 +93,7 @@ const TodoItem = ({ todo, onEdit, toggleTaskCompletion, onDelete }) => {
       {isDeleteModalOpen && (
         <TodoDeleteModal
           todo={todo}
-          onClose={CloseDeleteModal}
+          onClose={closeDeleteModal}
           onDelete={handleDeleteConfirm}
         />
       )}
@@ -102,4 +102,3 @@ const TodoItem = ({ todo, onEdit, toggleTaskCompletion, onDelete }) => {
 };
 
 export default TodoItem;
-

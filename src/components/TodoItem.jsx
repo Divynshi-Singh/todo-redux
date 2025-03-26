@@ -27,7 +27,6 @@ const TodoItem = ({ todo, onEdit, toggleTaskCompletion, onDelete }) => {
   };
 
   const truncatedText = todo.text.length > 43 ? todo.text.substring(0, 43) + "..." : todo.text;
-
   return (
     <li
       key={todo.id}
@@ -66,8 +65,8 @@ const TodoItem = ({ todo, onEdit, toggleTaskCompletion, onDelete }) => {
         {/* Due Date */}
         {todo.dueDate && (
           <div className="flex items-center space-x-2 mt-2">
-            <IoAlarmOutline size={15} className="text-gray-500" />
-            <span className="text-sm text-gray-600">
+            <IoAlarmOutline size={15} className="text-[gray] pt-[5px]" />
+            <span className="text-sm text-gray-600 pt-[5px] text-[13px]">
               {moment(todo.dueDate).format("MMMM D, YYYY h:mm")}
             </span>
           </div>

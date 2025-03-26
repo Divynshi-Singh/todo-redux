@@ -1,17 +1,7 @@
-import { ADD_TODO, EDIT_TODO, DELETE_TODO, TOGGLE_TODO } from '../types';
-
-const fetchTodoStatusColor = (dueDate, isTodoCompleted) => {
-  const currentTime = new Date();
-  const alarmTime = new Date(dueDate);
-  let alarmStatusColor = "rgb(182, 120, 255)"; // Default color
-  if (isTodoCompleted) {
-    alarmStatusColor = "green";
-  } else if (alarmTime < currentTime) {
-    alarmStatusColor = "red"; 
-  }
-  return alarmStatusColor;
-};
+import { ADD_TODO, EDIT_TODO, DELETE_TODO, TOGGLE_TODO, UPDATE_ALARM_STATUS } from '../types';
+import { fetchTodoStatusColor } from '../utils';
 const initialState = JSON.parse(localStorage.getItem('todos')) || [];
+
 const todoReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_TODO:
@@ -49,6 +39,14 @@ const todoReducer = (state = initialState, action) => {
       localStorage.setItem('todos', JSON.stringify(updatedDeleteTodos));
       return updatedDeleteTodos;
 
+    case UPDATE_ALARM_STATUS:
+      const updatedTodos = state.map((todo) => ({
+        ...todo,
+        alarmStatusColor: fetchTodoStatusColor(todo.dueDate, todo.completed),
+      }));
+      localStorage.setItem("todos", JSON.stringify(updatedTodos));
+      return updatedTodos;
+
     case TOGGLE_TODO:
       const updatedToggleTodos = state.map((todo) =>
         todo.id === action.payload.id
@@ -61,10 +59,10 @@ const todoReducer = (state = initialState, action) => {
       );
       localStorage.setItem('todos', JSON.stringify(updatedToggleTodos));
       return updatedToggleTodos;
+
     default:
       return state;
   }
 };
 
 export default todoReducer;
-

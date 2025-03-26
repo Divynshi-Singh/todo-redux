@@ -5,7 +5,6 @@ const TodoDeleteModal = ({ onClose, onDelete }) => {
     onDelete();
     onClose();
   };
-
   const handleCancel = () => {
     onClose();
   };

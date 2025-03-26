@@ -6,7 +6,7 @@ import { GoPlusCircle } from "react-icons/go";
 import TodoAddEdit from "./TodoAddEdit";
 import TodoItem from "./TodoItem";
 import moment from "moment";
-import { addTodo, editTodo, deleteTodo, toggleTodo } from "../redux/actions/todoActions";
+import { addTodo, editTodo, deleteTodo, toggleTodo, updateAlarmStatus } from "../redux/actions/todoActions";
 
 const TodoApp = () => {
   const todos = useSelector(state => state.todos);
@@ -41,6 +41,17 @@ const TodoApp = () => {
   const handleCheckboxChange = (id) => {
     dispatch(toggleTodo(id));
   };
+  useEffect(() => {
+    const interval = setInterval(() => {
+      console.log("Dispatching updateAlarmStatus action...");
+      dispatch(updateAlarmStatus());
+    }, 60000);
+
+    return () => {
+      clearInterval(interval);
+      console.log("Interval cleared");
+    };
+  }, [dispatch]);
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-500 overflow-hidden">
@@ -64,7 +75,6 @@ const TodoApp = () => {
         </div>
 
         {todos.length === 0 && <div className="text-[gray] pl-[18px] pt-[8px] text-[20px]">Enter a Task...</div>}
-
         <ul className="space-y-2 pl-[10px] max-h-[450px] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-200">
           {todos.map((todo) => (
             <TodoItem
@@ -85,8 +95,8 @@ const TodoApp = () => {
           todo={editingTodo}
           isOpen={isAddEditModalOpen}
           onClose={() => setIsAddEditModalOpen(false)}
-        // onAddTodo={handleAddTodo}
-        // onEdit={handleEditTodo}
+          onAddTodo={handleAddTodo}
+          onEdit={handleEditTodo}
 
         />
       )}
@@ -95,14 +105,3 @@ const TodoApp = () => {
 };
 
 export default TodoApp;
-
-
-
-
-
-
-
-
-
-
-
